@@ -3,6 +3,7 @@ import MainLayout from "../components/MainLayout";
 import { motion } from "framer-motion";
 
 
+
 import API  from "../api/axios";
 
 import {
@@ -21,7 +22,7 @@ function Dashboard() {
 
 
 useEffect(() => {
-const token = localStorage.getItem("token");
+// const token = localStorage.getItem("token");
   // alert(token);
     API.get("/test")
       .then((res) => {

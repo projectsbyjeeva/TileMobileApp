@@ -1,5 +1,10 @@
 {
   "appId": "com.myapp.app",
   "appName": "Tile-App",
-  "webDir": "dist"
+  "webDir": "dist",
+
+"server": {
+  "url": "http://192.168.137.1:5173",
+  "cleartext": true
+}
 }

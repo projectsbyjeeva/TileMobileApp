@@ -91,7 +91,7 @@ function UserTypeMobile() {
     });
   };
 
-  // ================= DELETE =================
+  
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -103,7 +103,7 @@ function UserTypeMobile() {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        API.delete(`/user-types/${id}`)
+        API.delete(`/user-type-delete/${id}`)
           .then(() => {
             setList((prev) => prev.filter((item) => item.id !== id));
             Swal.fire("Deleted!", "Record removed", "success");

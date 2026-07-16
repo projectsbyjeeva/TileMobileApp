@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import Swal from "sweetalert2";
 import { Eye, EyeOff, Lock, User } from "lucide-react";
+import { Preferences } from "@capacitor/preferences";
+
+
 
 function Login() {
   const [name, setUserName] = useState("");
@@ -33,11 +36,26 @@ function Login() {
       const api = res.data;
 
       if (api.token) {
-        localStorage.setItem("token", api.token);
-        localStorage.setItem("user", JSON.stringify(api.user));
-      }
+          await Preferences.set({
+    key: "token",
+    value: api.token,
+  });
 
-      Swal.fire({
+  
+
+
+
+  await Preferences.set({
+    key: "user",
+    value: JSON.stringify(api.user),
+  });
+
+  const { value } = await Preferences.get({
+    key:"token",
+  });
+   console.log("Stored Token:" ,value);
+
+     Swal.fire({
         icon: "success",
         title: "Welcome!",
         text: "Login Successful",
@@ -46,6 +64,9 @@ function Login() {
       });
 
       navigate("/dashboard");
+      }
+
+    
 
     } catch (err) {
       const status = err.response?.status;

@@ -58,7 +58,7 @@ function DrawerMenu({ open, setOpen }) {
           {/* Menu */}
           <div className="flex-1 overflow-y-auto px-4 py-5 space-y-3">
 
-            <MenuItem icon={<FaHome />} label="Home" />
+            <MenuItem icon={<FaHome />} label="Home" onClick={() => navigate("/dashboard")} />
             <MenuItem icon={<FaUsers />} label="Customers" />
             <MenuItem icon={<FaClipboardList />} label="Quotation" onClick={() => navigate("/quotation")} />
             <MenuItem icon={<FaFileInvoice />} label="Billing" onClick={() => navigate("/billinglist")} />

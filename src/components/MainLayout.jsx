@@ -4,6 +4,7 @@ import BottomNav from "./BottomNav";
 import { Menu, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import { Preferences  } from "@capacitor/preferences";
 
 
 function MainLayout({ title, children }) {
@@ -15,19 +16,38 @@ function MainLayout({ title, children }) {
 
 const handleLogout = async () => {
   try {
-        const user = JSON.parse(localStorage.getItem("user"));
+    const { value } = await Preferences.get({
+      key:"user",
+    });
+
+       const user = JSON.parse(value);
 
     await API.post("/logout",{
       user_id:user.id
     }); // backend route
 
-    localStorage.removeItem("token");
+
+    await Preferences.remove({
+      key:"token",
+    });
+
+      await Preferences.remove({
+      key:"user",
+    });
 
 
     navigate("/");
   } catch (err) {
     console.log(err);
-    localStorage.removeItem("token"); // still logout locally
+      await Preferences.remove({
+      key: "token",
+    });
+
+    await Preferences.remove({
+      key: "user",
+    });
+   
+     // still logout locally
     navigate("/");
   }
 };

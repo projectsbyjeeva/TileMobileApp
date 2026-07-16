@@ -52,6 +52,7 @@ const fetchRoles = () => {
   const openAdd = () => {
     setForm({
       name: "",
+      username:"",
       email: "",
       phone: "",
       password: "",
@@ -69,6 +70,7 @@ const fetchRoles = () => {
   // optional: clear form first (loading feel)
   setForm({
     name: "",
+     username:"",
     email: "",
     phone: "",
     password: "",
@@ -84,6 +86,7 @@ const fetchRoles = () => {
 
       setForm({
         name: data.name || "",
+        username :data.user_name || "",
         email: data.email_id || "",
         phone: data.mobile_no || "",
         password: data.password || "", // ❗ never fill password
@@ -122,6 +125,9 @@ const fetchRoles = () => {
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
   if (!form.name) newErrors.name = "Name is required";
+
+    if (!form.username) newErrors.username = "User Name is required";
+
 
   if (!form.phone) {
     newErrors.phone = "Phone is required";
@@ -292,6 +298,18 @@ if (!form.role) newErrors.role = "Role is required";
                 />
                 {errors.name && (
   <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+)}
+
+ <input
+                  placeholder="User Name"
+                  value={form.username}
+                  onChange={(e) =>
+                    setForm({ ...form, username: e.target.value })
+                  }
+                  className="w-full p-3 border rounded-xl"
+                />
+                {errors.username && (
+  <p className="text-red-500 text-sm mt-1">{errors.username}</p>
 )}
 
                 <input

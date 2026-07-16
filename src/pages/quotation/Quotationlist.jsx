@@ -13,6 +13,7 @@ function Quotationlist() {
   
 const [quotations, setQuotations] = useState([]);
 const [loading, setLoading] = useState(false);
+const [searchText, setSearchText] = useState("");
 
 
 
@@ -50,6 +51,17 @@ const fetchQuotations = () => {
     });
 };
 
+const filteredQuotations = quotations.filter((item) => {
+
+  const search  = searchText.toLowerCase();  
+
+  return (
+
+   item.quotation_id?.toString().toLowerCase().includes(search) ||
+    item.customer_name?.toString().toLowerCase().includes(search)
+  );
+
+});
 
 
 const deleteQuotation = (id) => {
@@ -126,8 +138,8 @@ const deleteQuotation = (id) => {
       <div className="max-w-md mx-auto">
         <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full">
           <Search size={18} className="text-white" />
-          <input
-            placeholder="Search Customer Name..."
+          <input value={searchText} onChange={(e) => setSearchText(e.target.value)}
+            placeholder="Search Customer Name / Quotation No..."
             className="bg-transparent outline-none text-white placeholder-white/70 w-full"
           />
         </div>
@@ -147,9 +159,9 @@ const deleteQuotation = (id) => {
             <div className="h-6 bg-gray-200 rounded w-full"></div>
           </div>
         ))
-      ) : (
+      ) : filteredQuotations.length > 0 ?  (
 
-        quotations.map((item) => (
+        filteredQuotations.map((item) => (
           <motion.div
             key={item.id}
             whileTap={{ scale: 0.97 }}
@@ -190,8 +202,8 @@ const deleteQuotation = (id) => {
             {/* FOOTER ACTIONS */}
             <div className="flex justify-between items-center mt-4 pl-2">
 
-              <p className="text-[11px] text-gray-400">
-                {item.entry_date}
+              <p className="font-bold text-[11px] text-gray-400">
+                {item.formatted_entry_date}
               </p>
 
               <div className="flex gap-2">
@@ -242,6 +254,14 @@ const deleteQuotation = (id) => {
 
           </motion.div>
         ))
+      ) : (
+
+        <div className="text-center bg-white rounded-2xl p-6 shadow">
+            <p className="font-bold text-gray-700">No data found</p>
+            <p className="text-sm text-gray-400 mt-1">
+              Search customer name or quotation number
+            </p>
+          </div>
       )}
 
     </div>
